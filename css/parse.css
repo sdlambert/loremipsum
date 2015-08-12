@@ -1,0 +1,23 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+	fieldset {
+	display: block;
+	padding: 1em;
+	max-width: 580px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 15px;
+	border-radius: 9px;
+}
+
+textarea {
+	display: inline-block;
+	width: 100%;
+	font-family: monospace;
+	margin: 1em 0;
+}

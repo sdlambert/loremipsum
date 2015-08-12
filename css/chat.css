@@ -1,0 +1,162 @@
+html {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.chat_window {
+	display: block;
+	padding: 1em;
+	max-width: 360px;
+	font-size: 15px;
+	border-radius: 9px;
+	height: 400px;
+	border: 1px solid #dcdcdc;
+	position: relative;
+}
+
+.chat_input {
+	position: absolute;
+	display: inline-block;
+	max-width: 100%;
+	font-family: monospace;
+	margin: 1em 0;
+	bottom: 0;
+}
+
+.chat_input img {
+	display: inline-block;
+}
+
+.middle {
+	vertical-align: middle;
+}
+
+#chat_history {
+	display: block;
+	overflow: hidden;
+	overflow-y: auto;
+	max-height: 320px;
+}
+
+#chat {
+	width: 300px;
+	height: 26px;
+	border: none;
+	border-bottom: 1px solid #dcdcdc;
+	margin: 4px;
+	padding: 4px;
+	background-color: transparent;
+}
+
+.user, .bot {
+
+	border: 1px solid #999;
+	border-radius: 5px;
+	padding: 3px;
+	font-size: 15px;
+	display: block;
+	margin: 4px;
+	vertical-align: middle;
+}
+
+.user p, .bot p {
+	padding: 6px 0;
+	margin: 0;
+	display: inline;
+}
+
+.user, .user img   {
+	float: right;
+	display: inline-block;
+	background-color: #ddd;
+}
+
+.bot, .bot img {
+	float: left;
+	display: inline-block;
+	background-color: #aaa;
+}
+
+.avatar {
+	width: 18px;
+	height: 18px;
+	margin: 3px 6px;
+}
+
+.chat_block {
+	display: inline-block;
+	clear: both;
+}
+
+.full {
+	width: 100%;
+	display: block;
+	clear: both;
+}
+
+.blurb {
+	color: #dcdcdc;
+	border: 1px solid #dcdcdc;
+	border-radius: 9px;
+	margin-top: 30px;
+	max-width: 360px;
+	padding: 5px;
+}
+
+.blurb a:link {
+	color: #dcdcdc;
+}
+
+.blurb a:hover {
+	color: #999;
+}
+
+.blurb a:visited {
+	color: #555;
+}
+
+.bouncer {
+	width: 2px;
+	height: 2px;
+	display: inline-block;
+	margin: 2px 1px;
+	position: relative;
+	background-color: #000;
+}
+
+.one {
+	animation-duration: .5s;
+	animation-name: bounce;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
+
+.two {
+	animation-duration: .5s;
+	animation-name: bounce;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-delay: .1s;
+}
+
+.three {
+	animation-duration: .5s;
+	animation-name: bounce;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-delay: .2s;
+}
+
+@keyframes bounce {
+	from {
+		bottom: 0;
+	}
+
+	to {
+		bottom: 6px;
+	}
+}
