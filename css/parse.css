@@ -6,7 +6,12 @@ html {
   box-sizing: inherit;
 }
 
-	fieldset {
+.main {
+	width: 100%;
+}
+
+
+fieldset {
 	display: block;
 	padding: 1em;
 	max-width: 580px;

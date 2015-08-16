@@ -7,6 +7,10 @@ html {
   box-sizing: inherit;
 }
 
+.main {
+	width: 100%;
+}
+
 .chat_window {
 	display: block;
 	padding: 1em;
@@ -53,7 +57,7 @@ html {
 }
 
 .user, .bot {
-
+	font-family: 'Roboto', sans-serif;
 	border: 1px solid #999;
 	border-radius: 5px;
 	padding: 3px;
