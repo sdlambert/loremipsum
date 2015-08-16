@@ -23,8 +23,6 @@ html {
 }
 
 .chat_input {
-	-webkit-appearance: none;
-	-moz-appearance: none;
 	position: absolute;
 	display: inline-block;
 	max-width: 95%;
