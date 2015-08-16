@@ -23,9 +23,11 @@ html {
 }
 
 .chat_input {
+	-webkit-appearance: none;
+	-moz-appearance: none;
 	position: absolute;
 	display: inline-block;
-	max-width: 100%;
+	max-width: 95%;
 	font-family: monospace;
 	margin: 1em 0;
 	bottom: 0;
