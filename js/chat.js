@@ -9,9 +9,9 @@
 
 	// Local vars
 	var words,       // object for lorem ipsum JSON
-			xhr,         // XMLHttpRequest object
-			chatInput,   // chat input
-			chatHistory; // chat history window
+	    xhr,         // XMLHttpRequest object
+	    chatInput,   // chat input
+	    chatHistory; // chat history window
 
 	/*
 	 * init - initializes XMLHttpRequest, adds event listener
@@ -35,7 +35,6 @@
 		chatInput.addEventListener("keyup", parseText, false);
 		chatHistory = document.getElementById("chat_history");
 	}
-
 
 	/**
 	 * parseText                     - listens for enter key
@@ -69,10 +68,10 @@
 	 */
 	function sendMessage(from, message, delay) {
 		var p,                 // paragraph element for message
-				img,               // image for avatar
-				innerDiv,          // inner div to hold animation and avatar
-				outerDiv,          // outer div for clearing floats
-				animationSequence; // class list for animation
+		    img,               // image for avatar
+		    innerDiv,          // inner div to hold animation and avatar
+		    outerDiv,          // outer div for clearing floats
+		    animationSequence; // class list for animation
 
 		// paragraph
 		p = document.createElement("p");
@@ -136,12 +135,12 @@
 	function respondTo(message) {
 
 		var response = "", // String to hold generated response
-				numWords,      // number of words in response
-				numChars,      // number of characters in word
-				selectedWord,  // index of selected word (by length)
-				delay,         // chat bot delay in ms
-				msgLength,     // number of words in @message String
-				comma;         // optional comma
+		    numWords,      // number of words in response
+		    numChars,      // number of characters in word
+		    selectedWord,  // index of selected word (by length)
+		    delay,         // chat bot delay in ms
+		    msgLength,     // number of words in @message String
+		    comma;         // optional comma
 
 		// short sentences typically get short responses.
 		if (message.indexOf(" ") === -1)
