@@ -95,6 +95,8 @@
 			// once the delay is done, remove animation, add message
 			setTimeout(function () {
 				removeAnimation(innerDiv);
+				p.appendChild(document.createTextNode(message));
+				innerDiv.appendChild(p);
 				chatHistory.scrollTop = chatHistory.scrollHeight;
 			}, delay);
 		}
