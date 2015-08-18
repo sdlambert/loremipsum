@@ -89,24 +89,12 @@
 		innerDiv.appendChild(img);
 		innerDiv.classList.add(from);
 
-		animationSequence = ["one","two","three"];
 
 		if (delay) {
-			// create our three bouncer divs and assign animations
-			animationSequence.forEach(function (animationClass) {
-				var newDiv = document.createElement("div");
-				newDiv.classList.add("bouncer", animationClass);
-				innerDiv.appendChild(newDiv);
-			});
-
-			// once the delay is done, remove child divs, add message
+			addAnimation(innerDiv);
+			// once the delay is done, remove animation, add message
 			setTimeout(function () {
-				var i = innerDiv.childNodes.length - 1;
-				for ( ; i >= 0; i--)
-					if (innerDiv.childNodes[i].tagName === "DIV")
-						innerDiv.removeChild(innerDiv.childNodes[i]);
-				p.appendChild(document.createTextNode(message));
-				innerDiv.appendChild(p);
+				removeAnimation(innerDiv);
 				chatHistory.scrollTop = chatHistory.scrollHeight;
 			}, delay);
 		}
@@ -128,7 +116,9 @@
 
 
 	/*
-	 * respondTo                   - responds to the user's message
+	 * respondTo responds to the user's message by picking random lorem ipsum
+	 * words from the words object.
+	 *
 	 * @param  {String} message    - incoming message string
 	 *
 	 */
@@ -170,20 +160,17 @@
 
 			// Capitalize first word only
 			if (!response) {
-				response = words[numChars][selectedWord].split("");
-				// neat trick to filter out any empty strings ("")
-				response.filter(Boolean);
+				response = words[numChars][selectedWord].split("").filter(Boolean);
 				response[0] = response[0].toUpperCase();
 				response = response.join("");
 			}
 			else
 				response += words[numChars][selectedWord];
 
-			// comma?
+			// comma?numChars
 			if (comma && numWords == comma)
 				response += ',';
 
-			// one less word required for our response
 			numWords--;
 
 			// last word? add punctuation, if not add a space
@@ -193,10 +180,40 @@
 		sendMessage("bot", response, delay);
 	}
 
+	/**
+	 * addAnimation adds the "typing" animation to element by appending the
+	 * animation sequence divs to the target element.
+	 *
+	 * @param {HTMLElement} element  - the target Element
+	 */
+	function addAnimation (element) {
+		var animationSequence = ["one","two","three"];
+
+		animationSequence.forEach(function (animationClass) {
+			var newDiv = document.createElement("div");
+			newDiv.classList.add("bouncer", animationClass);
+			element.appendChild(newDiv);
+		});
+	}
 
 	/**
-	 * wordLengthByFrequency - Normal (Gaussian) distribution for word lengths.
-	 *  Higher length words are called less frequently.
+	 * removeAnimation removes the "typing" animation by removing all of the
+	 * child divs of the target element.
+	 *
+	 * @param  {HTMLElement} element - the target Element
+	 *
+	 */
+	function removeAnimation (element) {
+		var i = element.childNodes.length - 1;
+
+		for ( ; i >= 0; i--)
+			if (element.childNodes[i].tagName === "DIV")
+				element.removeChild(element.childNodes[i]);
+	}
+
+	/**
+	 * wordLengthByFrequency provides a Normal (Gaussian) distribution for word
+	 * lengths. Higher length words are called less frequently.
 	 *
 	 */
 	function wordLengthByFrequency() {
