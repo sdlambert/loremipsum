@@ -14,7 +14,8 @@
 	    chatHistory; // chat history window
 
 	/*
-	 * init - initializes XMLHttpRequest, adds event listener
+	 * init - initializes XMLHttpRequest, reads in the words object, and adds
+	 * event listeners
 	 *
 	 */
 	function init () {
@@ -22,6 +23,7 @@
 		// Get JSON using AJAX, parse to obj
 		xhr = getXHR();
 		xhr.open("get", "data/words.json", true);
+
 		xhr.send(null);
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === 4 && xhr.status === 200)
@@ -37,7 +39,9 @@
 	}
 
 	/**
-	 * parseText                     - listens for enter key
+	 * parseText is the callback for the keyup eventlistener, and listens for
+	 * enter key to be pressed, signaling that the user has entered a message.
+	 *
 	 * @param {Event} event          - keyup from chatInput
 	 *
 	 */
@@ -60,7 +64,9 @@
 
 
 	/**
-	 * sendMessage                 - sends a message with an optional delay
+	 * sendMessage sends a message with an optional delay and posts it to the
+	 * .chat_history window.
+	 *
 	 * @param  {String} from       - "user", "bot" class
 	 * @param  {String} message    - message
 	 * @param  {Number} delay      - delay in MS
@@ -71,28 +77,32 @@
 		    img,               // image for avatar
 		    innerDiv,          // inner div to hold animation and avatar
 		    outerDiv,          // outer div for clearing floats
-		    animationSequence; // class list for animation
+		    animationSequence, // class list for animation
+		    position;          // left or right
 
 		// paragraph
 		p = document.createElement("p");
 
 		// img
 		img = document.createElement("img");
-		if (from === "bot")
+		if (from === "bot") {
 			img.src = "img/helmet1.svg";
-		else if (from === "user")
+			position = "left";
+		}
+		else if (from === "user") {
 			img.src = "img/user168.svg";
-		img.classList.add("avatar", "middle");
+			position = "right";
+		}
+		img.classList.add("avatar", "middle", position);
 
 		// inner div
 		innerDiv = document.createElement("div");
 		innerDiv.appendChild(img);
 		innerDiv.classList.add(from);
 
-
+		// once the delay is done, remove animation, add message
 		if (delay) {
 			addAnimation(innerDiv);
-			// once the delay is done, remove animation, add message
 			setTimeout(function () {
 				removeAnimation(innerDiv);
 				p.appendChild(document.createTextNode(message));
@@ -162,14 +172,12 @@
 
 			// Capitalize first word only
 			if (!response) {
-				response = words[numChars][selectedWord].split("").filter(Boolean);
-				response[0] = response[0].toUpperCase();
-				response = response.join("");
+				response = capitalizeWord(words[numChars][selectedWord]);
 			}
 			else
 				response += words[numChars][selectedWord];
 
-			// comma?numChars
+			// comma?
 			if (comma && numWords == comma)
 				response += ',';
 
@@ -187,6 +195,7 @@
 	 * animation sequence divs to the target element.
 	 *
 	 * @param {HTMLElement} element  - the target Element
+	 *
 	 */
 	function addAnimation (element) {
 		var animationSequence = ["one","two","three"];
@@ -212,6 +221,19 @@
 			if (element.childNodes[i].tagName === "DIV")
 				element.removeChild(element.childNodes[i]);
 	}
+
+
+	/**
+	 * capitalizeWord takes in a lowercase string and returns it with the first
+	 * letter capitalized.
+	 *
+	 * @param  {String} word - the word to capitalize
+	 * @return {String}      - the capitalized word
+	 */
+	function capitalizeWord(word) {
+		return  word.charAt(0).toUpperCase() + word.slice(1);
+	}
+
 
 	/**
 	 * wordLengthByFrequency provides a Normal (Gaussian) distribution for word
@@ -275,7 +297,7 @@
 	}
 
 	/**
-	 * getXHR - XMLHttpRequest function
+	 * getXHR opens a new XMLHttpRequest object and returns it.
 	 *
 	 */
 	function getXHR() {
