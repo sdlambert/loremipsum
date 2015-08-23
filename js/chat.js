@@ -9,9 +9,10 @@
 
 	// Local vars
 	var words,       // object for lorem ipsum JSON
-	    xhr,         // XMLHttpRequest object
 	    chatInput,   // chat input
-	    chatHistory; // chat history window
+	    history,     // chat history window
+	    isTyping;    // global boolean to prevent multiple asynchronous responses
+
 
 	/*
 	 * init - initializes XMLHttpRequest, reads in the words object, and adds
@@ -19,24 +20,36 @@
 	 *
 	 */
 	function init () {
+		var xhr,
+		    success;
 
-		// Get JSON using AJAX, parse to obj
-		xhr = getXHR();
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		}
+		else {
+			window.alert("Your browser does not support XMLHttpRequest. Please upgrade your browser to view this demo.");
+			return false;
+		}
+
 		xhr.open("get", "data/words.json", true);
-
+		// xhr.overrideMimeType("application/json");
 		xhr.send(null);
 		xhr.onreadystatechange = function() {
-			if (xhr.readyState === 4 && xhr.status === 200)
+			if (xhr.readyState === 4 && xhr.status === 200) {
 				words = JSON.parse(xhr.responseText);
+			}
 			else
 				console.log("Ready state:" + xhr.readyState + " Status: " + xhr.status);
 		};
 
-		// initialize variables
+		// Get JSON using AJAX, parse to obj
 		chatInput = document.getElementById("chat");
 		chatInput.addEventListener("keyup", parseText, false);
-		chatHistory = document.getElementById("chat_history");
+		history = document.getElementById("history");
+
+		isTyping = false;
 	}
+
 
 	/**
 	 * parseText is the callback for the keyup eventlistener, and listens for
@@ -55,9 +68,13 @@
 			if (message !== "") {
 				chatInput.value = "";
 				sendMessage("user", message);
-				setTimeout(function () {
-					respondTo(message);
-				}, Math.random() * (4000) + 1000);
+				// Only respond to one message at a time
+				if(!isTyping) {
+					isTyping = true;
+					setTimeout(function () {
+						respondTo(message);
+					}, Math.random() * (4000) + 1000);
+				}
 			}
 		}
 	}
@@ -85,6 +102,7 @@
 
 		// img
 		img = document.createElement("img");
+
 		if (from === "bot") {
 			img.src = "img/helmet1.svg";
 			position = "left";
@@ -93,6 +111,7 @@
 			img.src = "img/user168.svg";
 			position = "right";
 		}
+
 		img.classList.add("avatar", "middle", position);
 
 		// inner div
@@ -100,14 +119,14 @@
 		innerDiv.appendChild(img);
 		innerDiv.classList.add(from);
 
-		// once the delay is done, remove animation, add message
+		// add animation, remove animation, add message
 		if (delay) {
 			addAnimation(innerDiv);
 			setTimeout(function () {
 				removeAnimation(innerDiv);
 				p.appendChild(document.createTextNode(message));
 				innerDiv.appendChild(p);
-				chatHistory.scrollTop = chatHistory.scrollHeight;
+				isTyping = false;
 			}, delay);
 		}
 		else {
@@ -121,9 +140,9 @@
 		outerDiv.appendChild(innerDiv);
 		outerDiv.classList.add("full");
 
-		// chatHistory
-		chatHistory.appendChild(outerDiv);
-		chatHistory.scrollTop = chatHistory.scrollHeight;
+		// history
+		history.appendChild(outerDiv);
+		history.scrollTop = history.scrollHeight;
 	}
 
 
@@ -168,7 +187,7 @@
 				numChars = wordLengthByFrequency();
 				selectedWord = Math.floor(Math.random() * words[numChars].length);
 			}
-			while (words[numChars][selectedWord] == response.split(" ").pop());
+			while (words[numChars][selectedWord] == response.split(" ").pop().toLowerCase());
 
 			// Capitalize first word only
 			if (!response) {
@@ -190,6 +209,7 @@
 		sendMessage("bot", response, delay);
 	}
 
+
 	/**
 	 * addAnimation adds the "typing" animation to element by appending the
 	 * animation sequence divs to the target element.
@@ -206,6 +226,7 @@
 			element.appendChild(newDiv);
 		});
 	}
+
 
 	/**
 	 * removeAnimation removes the "typing" animation by removing all of the
@@ -242,41 +263,22 @@
 	 */
 	function wordLengthByFrequency() {
 
-		var rndm = Math.floor(Math.random() * 100);
+		var rndm,  // a random number between 1-100
+		    dist,  // the distribution (in %) of the frequency of our words
+		    i,     // loop counter
+		    limit; // upper range limit for test
 
-			if (rndm <= 5)
-				return 1;
-			else if (rndm <= 12)
-				return 2;
-			else if (rndm <= 21)
-				return 3;
-			else if (rndm <= 34)
-				return 4;
-			else if (rndm <= 54)
-				return 5;
-			else if (rndm <= 67)
-				return 6;
-			else if (rndm <= 76)
-				return 7;
-			else if (rndm <= 81)
-				return 8;
-			else if (rndm <= 85)
-				return 9;
-			else if (rndm <= 89)
-				return 10;
-			else if (rndm <= 92)
-				return 11;
-			else if (rndm <= 94)
-				return 12;
-			else if (rndm <= 96)
-				return 13;
-			else if (rndm <= 98)
-				return 14;
-			else if (rndm <= 99)
-				return 15;
-			else if (rndm <= 100)
-				return 16;
+		rndm = Math.floor(Math.random() * 100);
+		dist = [5, 7, 9, 13, 20, 13, 9, 5, 4, 4, 3, 2, 2, 2, 1, 1];
+
+		for (i = 0, limit = 0; i < 16; i++) {
+			limit += dist[i];
+			if (rndm <= limit) {
+				return ++i;
+			}
+		}
 	}
+
 
 	/**
 	 * getPunctuation returns a random punctuation mark based on frequency.
@@ -294,24 +296,6 @@
 			return '!';
 		else
 			return '.';
-	}
-
-	/**
-	 * getXHR opens a new XMLHttpRequest object and returns it.
-	 *
-	 */
-	function getXHR() {
-		if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
-			xhr = new XMLHttpRequest();
-		}
-		else if (window.ActiveXObject) { // IE 6 and older
-			xhr = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		else {
-			window.alert("Your browser does not support AJAX.");
-			return false;
-		}
-		return xhr;
 	}
 
 	// add event listener for page load

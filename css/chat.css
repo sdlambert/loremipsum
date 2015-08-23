@@ -1,40 +1,50 @@
 html {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  font-size: 15px;
 }
 
 *, *::before, *::after {
   box-sizing: inherit;
 }
 
-.main {
+.container {
 	width: 100%;
 }
 
-.chat_window {
+.window {
 	display: block;
-	padding: 1em;
+	margin: 0 auto;
+	padding: 16px;
 	max-width: 360px;
-	font-size: 15px;
 	border-radius: 9px;
-	height: 400px;
+	height: 440px;
 	border: 1px solid #dcdcdc;
-	position: relative;
+}
+
+
+#history {
+	display: block;
+	overflow: hidden;
+	overflow-y: auto;
+	height: 360px;
+
 }
 
 .chat_input {
-	position: absolute;
-	display: inline-block;
-	max-width: 100%;
-	font-family: monospace;
-	font-height: 15px;
-	margin: 1em 0;
-	bottom: 0;
-	height: 24px;
+	height: 48px;
 }
 
 .chat_input img {
 	display: inline-block;
+	margin: 14px 8px;
+}
+
+#chat {
+	width: 280px;
+	border: none;
+	border-bottom: 1px solid #dcdcdc;
+	background-color: transparent;
 }
 
 .middle {
@@ -49,23 +59,8 @@ html {
 	float: left;
 }
 
-#chat_history {
-	display: block;
-	overflow: hidden;
-	overflow-y: auto;
-	max-height: 320px;
-}
 
-#chat {
-	width: 80%;
-	max-width: 300px;
-	height: 26px;
-	border: none;
-	border-bottom: 1px solid #dcdcdc;
-	margin: 4px;
-	padding: 4px;
-	background-color: transparent;
-}
+
 
 .user, .bot {
 	font-family: 'Roboto', sans-serif;
@@ -112,7 +107,6 @@ html {
 
 .full {
 	width: 100%;
-	display: block;
 	clear: both;
 }
 
