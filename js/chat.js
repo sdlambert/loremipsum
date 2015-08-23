@@ -169,12 +169,12 @@
 		else
 			msgLength = message.split(" ").length;
 
-		// longer sentences should get a comma
-		if (msgLength > 8)
-			comma = Math.ceil(msgLength / 2);
-
 		// maximum response length is 2 more words than the incoming message
 		numWords = Math.ceil(Math.random() * (msgLength + 2));
+
+		// longer sentences should get a comma
+		if (numWords > 8)
+			comma = Math.ceil(numWords / 2);
 
 		// simulated delayed response
 		delay = Math.ceil(Math.random() * (numWords + 1) * 1000) + 2500;
@@ -197,7 +197,7 @@
 				response += words[numChars][selectedWord];
 
 			// comma?
-			if (comma && numWords == comma)
+			if (comma && numWords === comma)
 				response += ',';
 
 			numWords--;

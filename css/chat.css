@@ -58,9 +58,6 @@ html {
 	float: left;
 }
 
-
-
-
 .user, .bot {
 	font-family: 'Roboto', sans-serif;
 	border-radius: 11px;
@@ -76,7 +73,7 @@ html {
 	margin: 0;
 	display: inline-block;
 	vertical-align: text-bottom;
-	max-width: 80%;
+	max-width: 90%;
 }
 
 .user {
@@ -95,7 +92,7 @@ html {
 .avatar {
 	width: 18px;
 	height: 18px;
-	margin: 6px 6px;
+	margin: 6px;
 	display: inline-block;
 }
 
@@ -107,6 +104,15 @@ html {
 .full {
 	width: 100%;
 	clear: both;
+}
+
+.full::after {
+	content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
 }
 
 .blurb {
