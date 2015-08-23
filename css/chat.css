@@ -28,7 +28,6 @@ html {
 	overflow: hidden;
 	overflow-y: auto;
 	height: 360px;
-
 }
 
 .chat_input {
@@ -41,7 +40,7 @@ html {
 }
 
 #chat {
-	width: 280px;
+	width: 275px;
 	border: none;
 	border-bottom: 1px solid #dcdcdc;
 	background-color: transparent;
