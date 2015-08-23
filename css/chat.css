@@ -40,7 +40,7 @@ html {
 }
 
 #chat {
-	width: 260px;
+	width: 250px;
 	border: none;
 	border-bottom: 1px solid #dcdcdc;
 	background-color: transparent;
@@ -76,7 +76,7 @@ html {
 	margin: 0;
 	display: inline-block;
 	vertical-align: text-bottom;
-	max-width: 90%;
+	max-width: 85%;
 }
 
 .user {
