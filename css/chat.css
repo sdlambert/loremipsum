@@ -30,6 +30,10 @@ html {
 	height: 360px;
 }
 
+input:focus {
+	outline: none;
+}
+
 .chat_input {
 	height: 48px;
 }
