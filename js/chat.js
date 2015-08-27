@@ -126,6 +126,7 @@
 				removeAnimation(innerDiv);
 				p.appendChild(document.createTextNode(message));
 				innerDiv.appendChild(p);
+				history.scrollTop = history.scrollHeight;
 				isTyping = false;
 			}, delay);
 		}
@@ -155,13 +156,13 @@
 	 */
 	function respondTo(message) {
 
-		var response = "", // String to hold generated response
-		    numWords,      // number of words in response
-		    numChars,      // number of characters in word
-		    selectedWord,  // index of selected word (by length)
-		    delay,         // chat bot delay in ms
-		    msgLength,     // number of words in @message String
-		    comma;         // optional comma
+		var response = "",  // String to hold generated response
+		    responseLength, // number of words in response
+		    numChars,       // number of characters in word
+		    selectedWord,   // index of selected word (by length)
+		    delay,          // chat bot delay in ms
+		    msgLength,      // number of words in @message String
+		    comma;          // optional comma
 
 		// short sentences typically get short responses.
 		if (message.indexOf(" ") === -1)
@@ -170,17 +171,17 @@
 			msgLength = message.split(" ").length;
 
 		// maximum response length is 2 more words than the incoming message
-		numWords = Math.ceil(Math.random() * (msgLength + 2));
+		responseLength = Math.ceil(Math.random() * (msgLength + 2));
 
 		// longer sentences should get a comma
-		if (numWords > 8)
-			comma = Math.ceil(numWords / 2);
+		if (responseLength > 8)
+			comma = Math.ceil(responseLength / 2);
 
 		// simulated delayed response
-		delay = Math.ceil(Math.random() * (numWords + 1) * 1000) + 2500;
+		delay = Math.ceil(Math.random() * (responseLength + 1) * 1000) + 2500;
 
 		// build the response
-		while (numWords > 0) {
+		while (responseLength > 0) {
 
 			// pick a word, but don't repeat the last one!
 			do {
@@ -197,13 +198,13 @@
 				response += words[numChars][selectedWord];
 
 			// comma?
-			if (comma && numWords === comma)
+			if (comma && responseLength === comma)
 				response += ',';
 
-			numWords--;
+			responseLength--;
 
 			// last word? add punctuation, if not add a space
-			response += (numWords === 0) ? getPunctuation() : " ";
+			response += (responseLength === 0) ? getPunctuation() : " ";
 		}
 
 		sendMessage("bot", response, delay);
