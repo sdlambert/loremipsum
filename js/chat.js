@@ -155,7 +155,6 @@
 	 *
 	 */
 	function respondTo(message) {
-
 		var response = "",  // String to hold generated response
 		    responseLength, // number of words in response
 		    numChars,       // number of characters in word
@@ -263,7 +262,6 @@
 	 *
 	 */
 	function wordLengthByFrequency() {
-
 		var rndm,  // a random number between 1-100
 		    dist,  // the distribution (in %) of the frequency of our words
 		    i,     // loop counter

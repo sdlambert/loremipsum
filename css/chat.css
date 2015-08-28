@@ -70,6 +70,8 @@ input:focus {
 	display: block;
 	margin: 4px;
 	vertical-align: middle;
+	overflow-x: hidden;
+	max-width: 97.5%;
 }
 
 .user p, .bot p {
@@ -77,7 +79,12 @@ input:focus {
 	margin: 0;
 	display: inline-block;
 	vertical-align: text-bottom;
-	max-width: 87.5%;
+	max-width: 89.5%;
+	word-wrap: break-word;
+}
+
+.user p {
+	padding-right: 0;
 }
 
 .user {
