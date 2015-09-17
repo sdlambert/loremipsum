@@ -67,7 +67,7 @@
 			// message is "sent" and triggers bot "response" with small delay
 			if (message !== "") {
 				chatInput.value = "";
-				sendMessage("user", message);
+				createMessage("user", message);
 				// Only respond to one message at a time
 				if(!isTyping) {
 					isTyping = true;
@@ -80,8 +80,69 @@
 	}
 
 
+	/*
+	 * respondTo responds to the user's message by picking random lorem ipsum
+	 * words from the words object.
+	 *
+	 * @param  {String} message    - incoming message string
+	 *
+	 */
+	function respondTo(message) {
+		var response = "",  // String to hold generated response
+		    responseLength, // number of words in response
+		    numChars,       // number of characters in word
+		    selectedWord,   // index of selected word (by length)
+		    delay,          // chat bot delay in ms
+		    msgLength,      // number of words in @message String
+		    comma;          // optional comma
+
+		// short sentences typically get short responses.
+		if (message.indexOf(" ") === -1)
+			msgLength = 1;
+		else
+			msgLength = message.split(" ").length;
+
+		// maximum response length is 2 more words than the incoming message
+		responseLength = Math.ceil(Math.random() * (msgLength + 2));
+
+		// longer sentences should get a comma
+		if (responseLength > 8)
+			comma = Math.ceil(responseLength / 2);
+
+		// simulated delayed response
+		delay = Math.ceil(Math.random() * (responseLength + 1) * 1000) + 2500;
+
+		// build the response
+		while (responseLength > 0) {
+			// pick a word, but don't repeat the last one!
+			do {
+				numChars = wordLengthByFrequency();
+				selectedWord = Math.floor(Math.random() * words[numChars].length);
+			}
+			while (words[numChars][selectedWord] == response.split(" ").pop().toLowerCase());
+
+			// Capitalize first word only
+			if (!response)
+				response = capitalizeWord(words[numChars][selectedWord]);
+			else
+				response += words[numChars][selectedWord];
+
+			// comma?
+			if (comma && responseLength === comma)
+				response += ',';
+
+			responseLength--;
+
+			// last word? add punctuation, if not add a space
+			response += (responseLength === 0) ? getPunctuation() : " ";
+		}
+
+		createMessage("bot", response, delay);
+	}
+
+
 	/**
-	 * sendMessage sends a message with an optional delay and posts it to the
+	 * createMessage creates a message with an optional delay and posts it to the
 	 * .chat_history window.
 	 *
 	 * @param  {String} from       - "user", "bot" class
@@ -89,7 +150,7 @@
 	 * @param  {Number} delay      - delay in MS
 	 *
 	 */
-	function sendMessage(from, message, delay) {
+	function createMessage(from, message, delay) {
 		var p,                 // paragraph element for message
 		    img,               // image for avatar
 		    innerDiv,          // inner div to hold animation and avatar
@@ -144,69 +205,6 @@
 		// history
 		history.appendChild(outerDiv);
 		history.scrollTop = history.scrollHeight;
-	}
-
-
-	/*
-	 * respondTo responds to the user's message by picking random lorem ipsum
-	 * words from the words object.
-	 *
-	 * @param  {String} message    - incoming message string
-	 *
-	 */
-	function respondTo(message) {
-		var response = "",  // String to hold generated response
-		    responseLength, // number of words in response
-		    numChars,       // number of characters in word
-		    selectedWord,   // index of selected word (by length)
-		    delay,          // chat bot delay in ms
-		    msgLength,      // number of words in @message String
-		    comma;          // optional comma
-
-		// short sentences typically get short responses.
-		if (message.indexOf(" ") === -1)
-			msgLength = 1;
-		else
-			msgLength = message.split(" ").length;
-
-		// maximum response length is 2 more words than the incoming message
-		responseLength = Math.ceil(Math.random() * (msgLength + 2));
-
-		// longer sentences should get a comma
-		if (responseLength > 8)
-			comma = Math.ceil(responseLength / 2);
-
-		// simulated delayed response
-		delay = Math.ceil(Math.random() * (responseLength + 1) * 1000) + 2500;
-
-		// build the response
-		while (responseLength > 0) {
-
-			// pick a word, but don't repeat the last one!
-			do {
-				numChars = wordLengthByFrequency();
-				selectedWord = Math.floor(Math.random() * words[numChars].length);
-			}
-			while (words[numChars][selectedWord] == response.split(" ").pop().toLowerCase());
-
-			// Capitalize first word only
-			if (!response) {
-				response = capitalizeWord(words[numChars][selectedWord]);
-			}
-			else
-				response += words[numChars][selectedWord];
-
-			// comma?
-			if (comma && responseLength === comma)
-				response += ',';
-
-			responseLength--;
-
-			// last word? add punctuation, if not add a space
-			response += (responseLength === 0) ? getPunctuation() : " ";
-		}
-
-		sendMessage("bot", response, delay);
 	}
 
 
