@@ -1,4 +1,7 @@
 # loremipsum
-A lorem ipsum chat bot application
+A lorem ipsum parser and chat bot application
 
-[Link](https://sdlambert.github.io/loremipsum/chat.html)
+Demos:
+
+* [Parser](https://sdlambert.github.io/loremipsum/parser.html)
+* [Chat bot](https://sdlambert.github.io/loremipsum/chat.html)

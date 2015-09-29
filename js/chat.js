@@ -31,8 +31,8 @@
 			return false;
 		}
 
+		// Init AJAX, parse JSON
 		xhr.open("get", "data/words.json", true);
-		// xhr.overrideMimeType("application/json");
 		xhr.send(null);
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === 4 && xhr.status === 200) {
@@ -42,7 +42,7 @@
 				console.log("Ready state:" + xhr.readyState + " Status: " + xhr.status);
 		};
 
-		// Get JSON using AJAX, parse to obj
+		// Init listeners
 		chatInput = document.getElementById("chat");
 		chatInput.addEventListener("keyup", parseText, false);
 		history = document.getElementById("history");
@@ -261,7 +261,7 @@
 	 */
 	function wordLengthByFrequency() {
 		var rndm,  // a random number between 1-100
-		    dist,  // the distribution (in %) of the frequency of our words
+		    dist,  // the distribution (in %) of the frequency of word lengths
 		    i,     // loop counter
 		    limit; // upper range limit for test
 

@@ -2,22 +2,35 @@
 (function main() {
 	"use strict";
 
-	var text, textIn, result;
+	var textIn, // textarea element for input
+	    result, // textarea element for output
+	    text;   // parsed text string, containing only words without punctuation
 
+	/**
+	 * init grabs the necessary input and output elements and listens for input
+	 * @return null
+	 */
 	function init () {
 		textIn = document.getElementById("text");
 		result = document.getElementById("result");
 		textIn.addEventListener("input", parseText, false);
 	}
 
+  /**
+   * parseText removes punctuation, identifies words, transforms those words
+   * to lowercase, sorts alphabetically, removes duplicates, and places them
+   * into an object with word lengths as keys and an array of words of said
+   * length as the value.
+   *
+   * @param  {Event} e - input event, called each time the user types
+   * @return null
+   */
 	function parseText (e) {
 		var uniques = [],
-				sortedWords = {};
-		// grab value
-		text = textIn.value;
+		    sortedWords = {};
 
 		// remove all punctuation, transform to lowercase
-		text = text.split(" ").map(function (word) {
+		text = textIn.value.split(" ").map(function (word) {
 			return word.split("").filter(function (letter) {
 				return /\w/.test(letter);
 			}).join("").toLowerCase();
