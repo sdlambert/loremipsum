@@ -130,7 +130,8 @@ input:focus {
 	color: #dcdcdc;
 	border: 1px solid #dcdcdc;
 	border-radius: 9px;
-	margin-top: 30px;
+	margin: 16px auto;
+	padding: 16px;
 	max-width: 360px;
 	padding: 5px;
 }
