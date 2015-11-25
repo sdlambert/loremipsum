@@ -2,7 +2,7 @@
 A lorem ipsum parser and chat bot application
 
 Blog post:
-* [Coding Project: A Lorem Ipsum Chat Application](http://sdlambert.github.io/2015/10/02/coding-project-lorem-ipsum-chat-bot/)]
+* [Coding Project: A Lorem Ipsum Chat Application](http://sdlambert.github.io/2015/10/02/coding-project-lorem-ipsum-chat-bot/)
 
 Demos:
 
